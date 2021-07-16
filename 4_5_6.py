@@ -75,7 +75,7 @@ final = res.groupby("CHROM").mean()
 final = final.sort_values(by='CHROM')
 
 final.plot.bar()
-final.to_csv("avg_DP.csv", index=False)
+final.to_csv("avg_DP.csv")
 plt.savefig("bar6.png")
 
 
