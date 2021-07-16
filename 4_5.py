@@ -38,4 +38,11 @@ interest = df[(df["INFO"].str.contains("GoNLv5_AF") & df["INFO"].str.contains("G
 
 res = pd.DataFrame()
 res["GT"] = interest.CPCT02220079R.str.split(':').str[0]
-res["AF"] = 
+res["AF"] = interest.INFO.str.extract("(.*GoNLv5_AF=)([0-9]*\.[0-9]*)")[1]
+
+res["GT"] = res["GT"].astype(str)
+res["AF"] = pd.to_numeric(res['AF'])
+
+counts = len(res[(res['GT'] == "0/1") & (res["AF"] < 0.01)])
+print(counts) # 1
+
