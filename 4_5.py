@@ -4,6 +4,7 @@ import pandas as pd
 
 import matplotlib.pyplot as plt
 
+# Task 4
 # bash
 # vcftools --gzvcf CPCT02220079.annotated.processed.vcf.gz\ 10-38-53-743.gz \
 # --recode --recode-INFO-all --keep-only-indels --out filtered_indels 
@@ -30,3 +31,11 @@ for (chrom, group), ax in zip(df.groupby("CHROM")["LEN"], axes.flatten()):
 
 plt.savefig("hist.png")
 df.to_csv("indel_lengths.csv", index=False)
+
+# Task 5
+df = df[df.FILTER == "PASS"]
+interest = df[(df["INFO"].str.contains("GoNLv5_AF") & df["INFO"].str.contains("GT"))]
+
+res = pd.DataFrame()
+res["GT"] = interest.CPCT02220079R.str.split(':').str[0]
+res["AF"] = 
