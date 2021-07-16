@@ -10,7 +10,7 @@ def my_counter(word: str):
 	word = word.lower()
 	count = dict(Counter(word))
 	count = {char: c for char, c in count.items() if c > 1}
-	return count
+	return len(count)
 	
 
 
