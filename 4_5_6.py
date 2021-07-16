@@ -61,3 +61,24 @@ res["AF"] = pd.to_numeric(res['AF'])
 counts = len(res[(res['GT'] == "0/1") & (res["AF"] < 0.01)])
 print(counts) # 1
 
+# Task 6
+df = read_vcf_gz("CPCT02220079.annotated.processed.vcf.gz 10-38-53-743.gz")
+interest = df[df.INFO.str.contains("DP")]
+dps = interest.CPCT02220079R.str.split(':').str[2]
+
+res = pd.DataFrame()
+res["CHROM"] = df.loc[dps.index]["CHROM"]
+res['mean_DP'] = pd.to_numeric(dps)
+
+res = res[~res['CHROM'].isin(['X', 'Y', 'MT'])]
+res['CHROM'] = pd.to_numeric(res['CHROM'])
+final = res.groupby("CHROM").mean()
+final = final.sort_values(by='CHROM')
+
+final.plot.bar()
+final.to_csv("avg_DP.csv", index=False)
+plt.savefig("bar6.png")
+
+
+
+
