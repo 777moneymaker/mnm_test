@@ -3,6 +3,7 @@ import os
 import pandas as pd
 
 import matplotlib.pyplot as plt
+import gzip
 
 # Task 4
 # bash
@@ -19,6 +20,17 @@ def read_vcf(path):
         sep = '\t'
     ).rename(columns={'#CHROM': 'CHROM'})
 
+def read_vcf_gz(path):
+    with gzip.open(path, 'rt') as f:
+        lines = [l for l in f if not l.startswith('##')]
+    return pd.read_csv(
+        io.StringIO(''.join(lines)),
+        dtype = {'#CHROM': str, 'POS': str, 'ID': str, 'REF': str, 'ALT': str,
+               'QUAL': str, 'FILTER': str, 'INFO': str},
+        sep = '\t'
+    ).rename(columns={'#CHROM': 'CHROM'})
+
+
 df = read_vcf("filtered_indels.recode.vcf")
 
 df = df[df.CHROM != "#CHROM"]
@@ -30,9 +42,12 @@ for (chrom, group), ax in zip(df.groupby("CHROM")["LEN"], axes.flatten()):
     group.plot(kind='hist', ax=ax, title=chrom)
 
 plt.savefig("hist.png")
+df = df[["CHROM", 'ID', 'REF', 'ALT', 'LEN']]
 df.to_csv("indel_lengths.csv", index=False)
 
 # Task 5
+df = read_vcf_gz("CPCT02220079.annotated.processed.vcf.gz 10-38-53-743.gz")
+df = df[df.CHROM != "#CHROM"]
 df = df[df.FILTER == "PASS"]
 interest = df[(df["INFO"].str.contains("GoNLv5_AF") & df["INFO"].str.contains("GT"))]
 
