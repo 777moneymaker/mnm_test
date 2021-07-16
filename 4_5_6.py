@@ -32,12 +32,11 @@ def read_vcf_gz(path):
 
 
 df = read_vcf("filtered_indels.recode.vcf")
-
 df = df[df.CHROM != "#CHROM"]
 df["LEN"] = [len(alt) - len(ref) for alt, ref in zip(df.ALT, df.REF)]
 
+# Plot grid
 fig, axes = plt.subplots(6,4, figsize=(10,10))
-
 for (chrom, group), ax in zip(df.groupby("CHROM")["LEN"], axes.flatten()):
     group.plot(kind='hist', ax=ax, title=chrom)
 
