@@ -29,3 +29,4 @@ for (chrom, group), ax in zip(df.groupby("CHROM")["LEN"], axes.flatten()):
     group.plot(kind='hist', ax=ax, title=chrom)
 
 plt.savefig("hist.png")
+df.to_csv("indel_lengths.csv", index=False)
