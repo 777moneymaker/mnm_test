@@ -8,12 +8,8 @@ def my_upper(word: str):
 	word1, word2 = [], []
 
 	for i, char in enumerate(word):
-		if i % 2:
-			word1.append(char.upper())
-			word2.append(char.lower())
-		else:
-			word1.append(char.lower())
-			word2.append(char.upper())
+			word1.append(char.upper() if i % 2 else char.lower())
+			word2.append(char.lower() if i % 2 else char.upper())
 
 	return [''.join(word1), ''.join(word2)]
 
