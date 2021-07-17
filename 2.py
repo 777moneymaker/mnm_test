@@ -15,7 +15,5 @@ def my_counter(word: str):
 
 
 if __name__ == "__main__":
-	print(my_counter('aBcbA'))
-	# {'a': 2, 'b': 2}
-	print(my_counter("RabarbArka"))
-	# {'r': 3, 'a': 4, 'b': 2}
+	print(my_counter('aBcbA')) # 2
+	print(my_counter("RabarbArka")) # 3
