@@ -40,3 +40,5 @@ vignettes/*.pdf
 
 # vcf
 *.vcf
+files/*.log
+files/CPCT02220079*
